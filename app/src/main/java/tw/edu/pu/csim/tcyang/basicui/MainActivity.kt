@@ -15,11 +15,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -62,7 +65,6 @@ fun Main(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     var mper: MediaPlayer? by remember { mutableStateOf(null) }
 
-    // 新增的狀態變數
     var flag by remember { mutableStateOf("test") }
 
     val Animals = listOf(
@@ -140,7 +142,6 @@ fun Main(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.size(10.dp))
 
-        // 新增的「按鈕測試」按鈕
         Button(
             onClick = {
                 if (flag == "test") {
@@ -159,39 +160,69 @@ fun Main(modifier: Modifier = Modifier) {
             Text("按鈕測試")
         }
 
-        // 顯示 flag 的值
         Text(text = flag)
 
         Spacer(modifier = Modifier.size(10.dp))
 
-        // 原始的音樂及結束 App 按鈕列
         Row {
-            Button(onClick = {
-                // 播放 teacher.aac
-                mper?.stop()
-                mper?.release()
-                mper = MediaPlayer.create(context, R.raw.tcyang)
-                mper?.start()
-            }) {
-                Text(text = "歡迎修課")
+            Button(
+                onClick = {
+                    mper?.release()
+                    mper = null
+                    mper = MediaPlayer.create(context, R.raw.tcyang)
+                    mper?.start()
+                },
+                modifier = Modifier
+                    .fillMaxWidth(0.33f)
+                    .fillMaxHeight(0.8f),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Green)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "歡迎", color = Color.Blue)
+                    Text(text = "修課", color = Color.Red)
+                    Image(
+                        painter = painterResource(id = R.drawable.teacher),
+                        contentDescription = "teacher icon",
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.size(10.dp))
+
+            Button(
+                onClick = {
+                    mper?.release()
+                    mper = null
+                    mper = MediaPlayer.create(context, R.raw.fly)
+                    mper?.start()
+                },
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .fillMaxHeight(0.4f),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "展翅飛翔", color = Color.White)
+                    Image(
+                        painter = painterResource(id = R.drawable.fly),
+                        contentDescription = "fly icon",
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.size(10.dp))
 
             Button(onClick = {
-                // 播放 fly.aac
-                mper?.stop()
-                mper?.release()
-                mper = MediaPlayer.create(context, R.raw.fly)
-                mper?.start()
-            }) {
-                Text(text = "展翅飛翔")
-            }
-
-            Spacer(modifier = Modifier.size(10.dp))
-
-            Button(onClick = {
-                // 結束 App
                 mper?.stop()
                 mper?.release()
                 (context as? ComponentActivity)?.finish()
