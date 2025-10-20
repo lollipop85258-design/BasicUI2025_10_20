@@ -176,15 +176,13 @@ fun Main(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.size(10.dp))
 
-        // 調整 Row 佈局，讓所有按鈕和圖片都能顯示在同一行
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween, // 平均分配空間
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // 歡迎修課按鈕
             Button(
                 onClick = {
                     mper?.release()
@@ -193,7 +191,7 @@ fun Main(modifier: Modifier = Modifier) {
                     mper?.start()
                 },
                 modifier = Modifier
-                    .weight(0.35f) // 給予比之前 0.33f 略小的權重，避免佔滿
+                    .weight(0.35f)
                     .fillMaxHeight(0.8f),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Green)
             ) {
@@ -212,7 +210,6 @@ fun Main(modifier: Modifier = Modifier) {
                 }
             }
 
-            // 展翅飛翔按鈕
             Button(
                 onClick = {
                     mper?.release()
@@ -221,7 +218,7 @@ fun Main(modifier: Modifier = Modifier) {
                     mper?.start()
                 },
                 modifier = Modifier
-                    .weight(0.4f) // 調整權重
+                    .weight(0.4f)
                     .fillMaxHeight(0.4f),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
             ) {
@@ -239,7 +236,6 @@ fun Main(modifier: Modifier = Modifier) {
                 }
             }
 
-            // 結束App 按鈕 (使用 weight 確保空間分配)
             Button(
                 onClick = {
                     mper?.stop()
@@ -251,12 +247,11 @@ fun Main(modifier: Modifier = Modifier) {
                 Text(text = "結束App")
             }
 
-            // 切換圖片 (不再使用 weight，只佔用自身大小)
             Image(
                 painter = painterResource(id = currentAnimal),
                 contentDescription = if (currentAnimal == R.drawable.animal0) "鴨子" else "企鵝",
                 modifier = Modifier
-                    .size(50.dp) // 圖片尺寸進一步縮小，確保能容納
+                    .size(50.dp)
                     .clickable {
                         currentAnimal = if (currentAnimal == R.drawable.animal0) {
                             R.drawable.animal1
